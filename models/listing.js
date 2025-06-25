@@ -6,7 +6,11 @@ const listingSchema = new Schema ({
         type: String,
         required: true
     },
-    thoughts: String,
+    author: {
+        type: String,
+        required: true
+    },
+    description: String,
     image: {
         type: String,
         default: "image_link",
