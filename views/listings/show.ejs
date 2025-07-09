@@ -1,0 +1,42 @@
+<%layout("/layouts/boilerplate") %>
+<body>
+  <div class="row offset-2 mt-5">
+    <div class="card mb-3" style="max-width: 900px">
+      <div class="row g-0">
+        <div class="col-md-4 justify-content-center d-flex">
+          <img src="<%= listing.image %>" class="img-fluid" alt="..." />
+        </div>
+        <div class="col-md-8">
+          <div
+            class="card-body showBody"
+            class="card"
+            style="max-height: 500px; overflow-y: auto"
+          >
+            <p class="card-text showText">
+              <b><%= listing.title %></b>
+            </p>
+            <p class="card-text showText">Author: <%= listing.author %></p>
+            <p class="card-text showText">
+              Description: <%= listing.description %>
+            </p>
+            <p class="card-text showText">Rating: <%= listing.rating %></p>
+
+            <!-- <p class="card-text">
+              <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="showBtns">
+    <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark offset-2"
+      >edit
+    </a>
+
+    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+      <button class="btn btn-dark offset-2">delete</button>
+    </form>
+  </div>
+</body>
