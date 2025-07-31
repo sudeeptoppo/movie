@@ -66,22 +66,20 @@
         </div>
 
         <div class="mb-3">
-          <label for="rating" class="form-label">Rating</label>
+          <label for="publishingYear" class="form-label">publishing Year</label>
           <input
-            name="listing[rating]"
-            placeholder="enter rating"
+            name="listing[publishing_year]"
+            placeholder="enter publishing Year"
             type="number"
-            value="<%= listing.rating %>"
-            min="0"
-            max="10"
+            value="<%= listing.publishing_year %>"
             class="form-control"
-            id="rating"
+            id="publishingYear"
             required
           />
-          <div class="invalid-feedback">Enter valid rating</div>
+          <div class="invalid-feedback">Enter valid year</div>
         </div>
 
-        <button class="addbtn">add</button>
+        <button class="addbtn mb-3">add</button>
       </form>
     </div>
   </div>
