@@ -8,6 +8,9 @@ const ejsMate = require("ejs-mate");
 
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 app.engine("ejs", ejsMate);
 
@@ -20,9 +23,23 @@ app.use((req, res, next) => {
   next();
 });
 
+const sessionOptions = {
+  secret: "thisisasecret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
+};
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
+app.use(cookieParser("secretcode"));
+app.use(session(sessionOptions));
+app.use(flash());
 
 main()
   .then(() => {
@@ -38,11 +55,31 @@ async function main() {
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.reviewSuccess = req.flash("reviewSuccess");
+  next();
+});
+
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
 
+app.get("/getcookies", (req, res) => {
+  console.log(req.cookies);
+  res.cookie("name", "tobi", { signed: true });
+  res.send("cookie");
+});
+
+app.get("/verify", (req, res) => {
+  console.log(req.signedCookies);
+  // console.log(req.cookies);
+  res.send("vfy");
+});
+
 // root route
 app.get("/", (req, res) => {
+  console.log(req.cookies);
   res.send("root route");
 });
 
