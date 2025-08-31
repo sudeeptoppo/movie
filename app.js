@@ -131,6 +131,10 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error.ejs", { err });
 });
 
+// app.listen(port, () => {
+//   console.log(`Server is Running on port ${port}`);
+// });
+
 app.listen(port, () => {
   console.log(`Server is Running on port ${port}`);
 });
