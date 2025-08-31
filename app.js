@@ -135,6 +135,9 @@ app.use((err, req, res, next) => {
 //   console.log(`Server is Running on port ${port}`);
 // });
 
+// app.listen(port, () => {
+//   console.log(`Server is Running on port ${port}`);
+// });
 app.listen(port, () => {
   console.log(`Server is Running on port ${port}`);
 });
