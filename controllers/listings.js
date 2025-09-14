@@ -7,9 +7,34 @@ module.exports.index = async (req, res) => {
     // Escape special characters in the query to prevent Regular Expression Denial of Service (ReDoS) attacks.
     const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const regex = new RegExp(escapedQ, "i");
+
+    const searchCondition = [
+      { title: regex },
+      { author: regex },
+      { description: regex },
+    ];
+
+    const year = parseInt(q);
+    if (!isNaN(year)) {
+      searchCondition.push({ publishing_year: year });
+    }
+
     allListings = await listing.find({
-      $or: [{ title: regex }, { author: regex }, { description: regex }],
+      $or: searchCondition,
     });
+
+    //   allListings = await listing.find({
+    //     $or: [
+    //       { title: regex },
+    //       { author: regex },
+    //       { description: regex },
+    //     ],
+    //     const year = parseInt(q);
+    //     if(!isNaN(year)) {
+    //       allListings.push({ publishing_year: year })
+    //     }
+
+    //   });
   } else {
     allListings = await listing.find({});
   }
